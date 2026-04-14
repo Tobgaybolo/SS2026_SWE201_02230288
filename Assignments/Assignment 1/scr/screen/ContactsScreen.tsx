@@ -9,10 +9,10 @@ interface Contact {
 }
 
 const contacts: Contact[] = [
-  { id: '1', name: 'Academic Office', phone: '123-456-7890' },
-  { id: '2', name: 'Student Affairs', phone: '123-456-7891' },
-  { id: '3', name: 'Library', phone: '123-456-7892' },
-  { id: '4', name: 'IT Support', phone: '123-456-7893' },
+  { id: '1', name: 'Academic Office', phone: '+97517123456' },
+  { id: '2', name: 'Student Affairs', phone: '+97517123456' },
+  { id: '3', name: 'Library', phone: '+97517123456' },
+  { id: '4', name: 'IT Support', phone: '+97517123456' },
 ];
 
 const ContactsScreen: React.FC = () => {

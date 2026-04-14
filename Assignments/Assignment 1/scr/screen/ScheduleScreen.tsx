@@ -10,12 +10,12 @@ type ScheduleItem = {
 };
 
 const weeklySchedule: ScheduleItem[] = [
-  { id: '1', day: 'Mon', time: '08:00 - 09:00', course: 'CTE205', location: 'Room 101' },
-  { id: '2', day: 'Mon', time: '09:30 - 10:30', course: 'DIS303', location: 'Room 102' },
-  { id: '3', day: 'Tue', time: '11:00 - 12:00', course: 'DSO101', location: 'Lab 201' },
-  { id: '4', day: 'Wed', time: '13:00 - 14:00', course: 'SDA202', location: 'Room 103' },
-  { id: '5', day: 'Thu', time: '14:30 - 15:30', course: 'SWE201', location: 'Lab 301' },
-  { id: '6', day: 'Fri', time: '10:00 - 11:00', course: 'Software Engineering', location: 'Room 202' },
+  { id: '1', day: 'Mon', time: '09:00 - 10:00', course: 'CTE205', location: 'ClassRoom 106' },
+  { id: '2', day: 'Mon', time: '10:15 - 11:15', course: 'DSO101', location: 'ClassRoom 106' },
+  { id: '3', day: 'Tue', time: '11:15 - 12:15', course: 'DIS303', location: 'IT-Lab 1' },
+  { id: '4', day: 'Wed', time: '01:15 - 02:15', course: 'SDA202', location: 'ClassRoom 106' },
+  { id: '5', day: 'Thu', time: '02:15 - 03:15', course: 'DIS303', location: 'IT-Lab 1' },
+  { id: '6', day: 'Fri', time: '03:15 - 04:15', course: 'Software Engineering', location: 'ClassRoom 106' },
 ];
 
 const dayOrder = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
