@@ -21,7 +21,7 @@ function AboutScreen({ navigation }: any) {
                 <View style={styles.container}>
                     <Text style={styles.title}>Responsive Profile</Text>
                     <Text style={styles.subtitle}>
-                        This screen also uses responsive containers and scrolling.
+                        This screen also uses responsive containers and scrolling
                     </Text>
 
                     {/* These cards behave like a simple adaptive grid. */}
