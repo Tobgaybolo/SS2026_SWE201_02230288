@@ -59,7 +59,10 @@ export default function TaskSelectionScreen({ navigation }: any) {
   ];
 
   const handleTaskSelect = (task: any) => {
-    navigation.navigate('Focus', { task });
+    navigation.navigate('HomeTabs', {
+      screen: 'Focus',
+      params: { task },
+    });
   };
 
   return (

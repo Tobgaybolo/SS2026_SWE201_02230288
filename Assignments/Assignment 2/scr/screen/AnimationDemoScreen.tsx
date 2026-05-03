@@ -135,22 +135,6 @@ export default function AnimationDemoScreen() {
             </Pressable>
           </View>
 
-          {/* Scale/Bounce Animation */}
-          <View style={styles.section}>
-            <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Scale / Bounce</Text>
-              <Text style={styles.apiLabel}>spring()</Text>
-            </View>
-            <View style={styles.bounceContainer}>
-              <Animated.View style={[styles.bounceBall, { transform: [{ scale: scaleAnim }] }]} />
-              <Animated.View style={[styles.bounceBall, { transform: [{ scale: scaleAnim }] }]} />
-              <Animated.View style={[styles.bounceBall, { transform: [{ scale: scaleAnim }] }]} />
-            </View>
-            <Pressable style={styles.button} onPress={startScaleAnimation}>
-              <Text style={styles.buttonText}>Trigger Bounce</Text>
-            </Pressable>
-          </View>
-
           {/* Drag Gesture */}
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
@@ -300,22 +284,6 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontWeight: '600',
     fontSize: 14,
-  },
-  bounceContainer: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 100,
-    marginBottom: 12,
-    backgroundColor: '#f9f5ff',
-    borderRadius: 12,
-    gap: 16,
-  },
-  bounceBall: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    backgroundColor: '#7c5cff',
   },
   dragContainer: {
     height: 180,

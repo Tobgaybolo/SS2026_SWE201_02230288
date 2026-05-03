@@ -107,13 +107,6 @@ export default function DetailScreen({ route, navigation }: any) {
             </Pressable>
           ))}
 
-          {/* Notes */}
-          <View style={styles.notesCard}>
-            <Text style={styles.notesTitle}>Notes</Text>
-            <Text style={styles.notesText}>
-              Must include Animated API + gesture handler. No backend needed.
-            </Text>
-          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -255,25 +248,6 @@ const styles = StyleSheet.create({
   subtaskCompletedText: {
     textDecorationLine: 'line-through',
     color: '#9ca3af',
-  },
-  notesCard: {
-    backgroundColor: '#ffffff',
-    padding: 16,
-    borderRadius: 12,
-    marginTop: 16,
-    borderWidth: 1,
-    borderColor: '#e6eef8',
-  },
-  notesTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#1f2937',
-    marginBottom: 8,
-  },
-  notesText: {
-    fontSize: 13,
-    color: '#6b7280',
-    lineHeight: 20,
   },
 });
 
