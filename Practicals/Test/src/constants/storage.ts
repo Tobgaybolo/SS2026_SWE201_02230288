@@ -1,0 +1,1 @@
+export const CONTACTS_STORAGE_KEY = "phone-contact-manager-contacts";
