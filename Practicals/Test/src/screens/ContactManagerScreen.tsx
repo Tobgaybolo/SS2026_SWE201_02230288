@@ -15,6 +15,7 @@ import {
 import { Contact } from "../types/contact";
 import { loadContacts, saveContacts } from "../services/contactStorage";
 
+// Default/empty values used to reset the form inputs after saving.
 const emptyForm = {
   name: "",
   phone: "",
@@ -22,17 +23,25 @@ const emptyForm = {
 };
 
 export default function ContactManagerScreen() {
+  // `contacts` holds the full list of saved contacts.
   const [contacts, setContacts] = useState<Contact[]>([]);
+  // Controlled inputs for the add contact form.
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  // `loading` is true while initial contacts are loaded from storage.
   const [loading, setLoading] = useState(true);
+  // `editingId` holds the id of the contact currently being edited,
+  // or `null` when the form is used to create a new contact.
+  const [editingId, setEditingId] = useState<string | null>(null);
 
+  // On mount: load previously saved contacts from persistent storage.
   useEffect(() => {
     const bootstrapContacts = async () => {
       try {
         setContacts(await loadContacts());
       } catch {
+        // Show a simple alert if storage read fails.
         Alert.alert("Storage error", "Could not load saved contacts.");
       } finally {
         setLoading(false);
@@ -42,6 +51,8 @@ export default function ContactManagerScreen() {
     bootstrapContacts();
   }, []);
 
+  // Persist contacts whenever they change, but only after initial load
+  // completes (so we don't overwrite storage with an empty list on startup).
   useEffect(() => {
     if (loading) {
       return;
@@ -52,11 +63,15 @@ export default function ContactManagerScreen() {
     });
   }, [contacts, loading]);
 
+  // Keep a memoized, alphabetically-sorted copy of the contacts for display.
+  // `useMemo` avoids re-sorting on every render unless `contacts` changes.
   const sortedContacts = useMemo(
     () => [...contacts].sort((left, right) => left.name.localeCompare(right.name)),
     [contacts],
   );
 
+  // Save a new contact or update an existing one when in edit mode.
+  // IDs are generated using the timestamp + a small random suffix to avoid collisions.
   const addContact = () => {
     const trimmedName = name.trim();
     const trimmedPhone = phone.trim();
@@ -67,20 +82,34 @@ export default function ContactManagerScreen() {
       return;
     }
 
-    setContacts((currentContacts) => [
-      {
-        id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
-        name: trimmedName,
-        phone: trimmedPhone,
-        email: trimmedEmail,
-      },
-      ...currentContacts,
-    ]);
+    if (editingId) {
+      // Update existing contact
+      setContacts((currentContacts) =>
+        currentContacts.map((c) =>
+          c.id === editingId ? { ...c, name: trimmedName, phone: trimmedPhone, email: trimmedEmail } : c,
+        ),
+      );
+      setEditingId(null);
+    } else {
+      // Create new contact and prepend to the list
+      setContacts((currentContacts) => [
+        {
+          id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+          name: trimmedName,
+          phone: trimmedPhone,
+          email: trimmedEmail,
+        },
+        ...currentContacts,
+      ]);
+    }
+
+    // Reset the form fields after save/update.
     setName(emptyForm.name);
     setPhone(emptyForm.phone);
     setEmail(emptyForm.email);
   };
 
+  // Remove a contact by filtering it out of the current list.
   const deleteContact = (contactId: string) => {
     setContacts((currentContacts) => currentContacts.filter((contact) => contact.id !== contactId));
   };
@@ -100,6 +129,7 @@ export default function ContactManagerScreen() {
             </Text>
           </View>
 
+          {/* Form for adding a new contact */}
           <View style={styles.formCard}>
             <Text style={styles.sectionTitle}>Add Contact</Text>
 
@@ -130,17 +160,41 @@ export default function ContactManagerScreen() {
               onChangeText={setEmail}
             />
 
-            <Pressable style={styles.primaryButton} onPress={addContact}>
-              <Text style={styles.primaryButtonText}>Save Contact</Text>
-            </Pressable>
+            {editingId ? (
+              <View style={styles.formButtons}>
+                <Pressable style={styles.primaryButton} onPress={addContact}>
+                  <Text style={styles.primaryButtonText}>Update Contact</Text>
+                </Pressable>
+
+                <Pressable
+                  style={styles.deleteButton}
+                  onPress={() => {
+                    // Cancel editing and reset the form
+                    setEditingId(null);
+                    setName(emptyForm.name);
+                    setPhone(emptyForm.phone);
+                    setEmail(emptyForm.email);
+                  }}
+                >
+                  <Text style={styles.deleteButtonText}>Cancel</Text>
+                </Pressable>
+              </View>
+            ) : (
+              <Pressable style={styles.primaryButton} onPress={addContact}>
+                <Text style={styles.primaryButtonText}>Save Contact</Text>
+              </Pressable>
+            )}
           </View>
 
+          {/* Header showing the total count of saved contacts */}
           <View style={styles.listHeader}>
             <Text style={styles.sectionTitle}>Saved Contacts</Text>
             <Text style={styles.listCount}>{sortedContacts.length} total</Text>
           </View>
 
-          <FlatList
+            {/* Contacts list. `FlatList` renders `sortedContacts` with a compact
+              card layout and a delete button for each entry. */}
+            <FlatList
             data={sortedContacts}
             keyExtractor={(item) => item.id}
             scrollEnabled={false}
@@ -163,9 +217,24 @@ export default function ContactManagerScreen() {
                     <Text style={styles.contactMeta}>{item.phone}</Text>
                   </View>
 
-                  <Pressable onPress={() => deleteContact(item.id)} style={styles.deleteButton}>
-                    <Text style={styles.deleteButtonText}>Delete</Text>
-                  </Pressable>
+                  <View style={styles.actionButtons}>
+                    <Pressable
+                      onPress={() => {
+                        // Populate the form with the contact values for editing.
+                        setName(item.name);
+                        setPhone(item.phone);
+                        setEmail(item.email);
+                        setEditingId(item.id);
+                      }}
+                      style={styles.editButton}
+                    >
+                      <Text style={styles.editButtonText}>Edit</Text>
+                    </Pressable>
+
+                    <Pressable onPress={() => deleteContact(item.id)} style={styles.deleteButton}>
+                      <Text style={styles.deleteButtonText}>Delete</Text>
+                    </Pressable>
+                  </View>
                 </View>
 
                 {item.email ? <Text style={styles.contactEmail}>{item.email}</Text> : null}
@@ -321,5 +390,26 @@ const styles = StyleSheet.create({
     color: "#ffffff",
     fontSize: 13,
     fontWeight: "700",
+  },
+  actionButtons: {
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "center",
+  },
+  editButton: {
+    backgroundColor: "#f59e0b",
+    borderRadius: 999,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+  },
+  editButtonText: {
+    color: "#071431",
+    fontSize: 13,
+    fontWeight: "700",
+  },
+  formButtons: {
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "center",
   },
 });
