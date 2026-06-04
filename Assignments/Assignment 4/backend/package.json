@@ -1,0 +1,17 @@
+{
+  "name": "taskreminderpro-backend",
+  "version": "1.0.0",
+  "description": "Express backend that stores Expo push tokens and sends remote push notifications via the Expo Push API.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.4.2",
+    "expo-server-sdk": "^6.1.0",
+    "express": "^5.2.1"
+  }
+}

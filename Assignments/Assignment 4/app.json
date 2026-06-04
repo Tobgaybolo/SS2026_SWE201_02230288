@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "Assignment 4",
+    "slug": "Assignment 4",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourname.taskreminderpro"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.yourname.taskreminderpro"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a4b59c71-f875-4ff9-bd8f-b7f5e29903f3"
+      },
+      "apiUrl": "http://172.20.10.6:3000"
+    },
+    "plugins": [
+      "@react-native-community/datetimepicker",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#4630EB"
+        }
+      ]
+    ]
+  }
+}
