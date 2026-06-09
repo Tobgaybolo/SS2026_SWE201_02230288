@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "Internship",
+    "slug": "internship",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "internship",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "bt.edu.cst.internship"
+    },
+    "android": {
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false,
+      "package": "bt.edu.cst.internship",
+      "googleServicesFile": "./google-services.json"
+    },
+    "web": {
+      "output": "static"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0F172A",
+          "dark": {
+            "backgroundColor": "#0F172A"
+          }
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./public/images/logo.png",
+          "color": "#0F172A",
+          "sounds": []
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
